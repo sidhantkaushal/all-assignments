@@ -3,14 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
- "scripts": {
-  "test": "jest",
-  "test-fileServer": "jest tests/fileServer.test.js",
-  "test-todoServer": "jest tests/todoServer.test.js",
-  "test-authenticationServer": "jest tests/authenticationServer.test.js",
-  "test-all": "jest tests/"
-},
-
+  "scripts": {
+    "test": "jest",
+    "test-fileServer": "jest tests/fileServer.test.js",
+    "test-todoServer": "jest tests/todoServer.test.js",
+    "test-authenticationServer": "jest tests/authenticationServer.test.js",
+    "test-all": "jest tests/"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

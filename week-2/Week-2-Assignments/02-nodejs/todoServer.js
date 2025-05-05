@@ -50,33 +50,86 @@ const app = express();
 app.use(bodyParser.json());
 
 let todoData = [];
+let nextId = 1;
 
 app.get('/todos',(req,res)=>{
-  res.status(200).send(todoData);
+
+  return res.status(200).json(todoData);  
 });
 
 
 app.get('/todos/:id',(req,res)=>{
+  try {
+    const searchId = parseInt(req.params.id);
 
+    const TodoItem = todoData.find(todoItem => todoItem.id == searchId);
+
+    
+    if(TodoItem){
+      return res.status(200).json(TodoItem);
+    }
+    else{
+      return res.status(404).json({error: 'Notfound'});
+    }
+    
+  } 
+  catch (error) {
+    return res.status(500).json(`error: Internal server Error: ${error}`);
+  }
+ 
 });
 
 app.post('/todos',(req,res)=>{
+
+  let newTodo = req.body;
+  newTodo.id = nextId++;
+  todoData.push(newTodo);
+  return res.status(201).json({id : newTodo.id});
 
 });
 
 
 app.put('/todos/:id',(req,res)=>{
+  try {
+    const searchIndex = parseInt(req.params.id);
+    const updatedTodo = req.body;
+    updatedTodo.id=searchIndex;
+    const itemIndex = todoData.findIndex((item)=>item.id==searchIndex);
+    if(itemIndex != -1){
+      todoData.splice(itemIndex,1,updatedTodo);
+      return res.status(200).json(`Todo item is updated.`);
+    }
+      return res.status(404).json(`Not Found`);
+    
+  } catch (error) {
+    return res.status(500).json(`error: Internal server Error: ${error}`);
+  }
+
 
 });
 
 
 app.delete('/todos/:id',(req,res)=>{
-
+  try {
+    const searchId = parseInt(req.params.id);
+    const index= todoData.findIndex((todoItem)=>todoItem.id ==searchId);
+    if(index!=-1){
+      todoData.splice(index,1);
+      return res.status(200).json(`Todo Item Deleted Successfully.`);
+    }
+    else{
+      return res.status(404).json({error: 'Notfound'});
+    }
+    
+  } 
+  catch (error) {
+    return res.status(500).json(`error: Internal server Error: ${error}`);
+  }
 })
 
-app.listen(3000,(req,res)=>{
-  console.log(`SERVER IS RUNNING AT http://localhost:3000`);
+// app.listen(3000,(req,res)=>{
+//   console.log(`SERVER IS RUNNING AT http://localhost:3000`);
   
-})
+// })
 
 module.exports = app;
