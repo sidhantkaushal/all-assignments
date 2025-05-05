@@ -39,11 +39,44 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
+
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.json());
+
+let todoData = [];
+
+app.get('/todos',(req,res)=>{
+  res.status(200).send(todoData);
+});
+
+
+app.get('/todos/:id',(req,res)=>{
+
+});
+
+app.post('/todos',(req,res)=>{
+
+});
+
+
+app.put('/todos/:id',(req,res)=>{
+
+});
+
+
+app.delete('/todos/:id',(req,res)=>{
+
+})
+
+app.listen(3000,(req,res)=>{
+  console.log(`SERVER IS RUNNING AT http://localhost:3000`);
+  
+})
 
 module.exports = app;
